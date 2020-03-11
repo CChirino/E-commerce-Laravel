@@ -32,10 +32,10 @@ Route::get('/', function () {
 // $prod = products::find(3)->category;
 // return $prod;
 
-$cat = categories::find(2)->product;
-return $cat;
+// $cat = categories::find(2)->product;
+// return $cat;
 
-    return view('welcome');
+    return view('shop.index');
 });
 
 Auth::routes();
