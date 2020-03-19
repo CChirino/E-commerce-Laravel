@@ -38,6 +38,12 @@ Route::get('/', function () {
     return view('shop.index');
 });
 
-Auth::routes();
+Route::get('/form', function () {
+    return view('form.form');
+});
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+Auth::routes();
+
