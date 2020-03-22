@@ -41,6 +41,12 @@ Route::get('/', function () {
 Route::get('/form', function () {
     return view('form.form');
 });
+Route::get('/admin', function () {
+    return view('layouts.admin');
+});
+Route::get('/create-category', function () {
+    return view('admin.category.create');
+});
 
 Route::get('/home', 'HomeController@index')->name('home');
 

@@ -49491,6 +49491,74 @@ module.exports = function(module) {
 
 /***/ }),
 
+/***/ "./resources/js/apicategory.js":
+/*!*************************************!*\
+  !*** ./resources/js/apicategory.js ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var apicategory = new Vue({
+  el: '#apicategory',
+  data: {
+    nombre: 'Christopher Chirino',
+    slug: '',
+    div_mensajeslug: 'Slug Existe',
+    div_claseslug: 'badge badge-danger',
+    div_aparecer: true,
+    deshabilitar_boton: 0
+  },
+  computed: {
+    generarSlug: function generarSlug() {
+      var _char = {
+        "á": "a",
+        "é": "e",
+        "í": "i",
+        "ó": "o",
+        "ú": "u",
+        "Á": "A",
+        "É": "E",
+        "Í": "I",
+        "Ó": "O",
+        "Ú": "U",
+        "ñ": "n",
+        "Ñ": "N",
+        " ": "-",
+        "_": "-"
+      };
+      var expr = /[áéíóúÁÉÍÓÚÑñ_ ]/g;
+      this.slug = this.nombre.trim().replace(expr, function (e) {
+        return _char[e];
+      }).toLowerCase();
+      return this.slug; //.trim()Eliminar espacios
+      // toLowerCase() Coloca las palabras en mayusculas
+      //return this.nombre.trim().replace(/ /g,'-').toLowerCase()
+    }
+  },
+  methods: {
+    getCategory: function getCategory() {
+      var _this = this;
+
+      var url = '/api/category/' + this.slug;
+      axios.get(url).then(function (response) {
+        _this.div_mensajeslug = response.data;
+
+        if (_this.div_mensajeslug === "Slug Disponible") {
+          _this.div_claseslug = 'badge badge-success';
+          _this.deshabilitar_boton = 0;
+        } else {
+          _this.div_claseslug = 'badge badge-danger';
+          _this.deshabilitar_boton = 1;
+        }
+
+        _this.div_aparecer = true;
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -49526,6 +49594,8 @@ Vue.component('example-component', __webpack_require__(/*! ./components/ExampleC
 var app = new Vue({
   el: '#app'
 });
+
+__webpack_require__(/*! ./apicategory */ "./resources/js/apicategory.js");
 
 /***/ }),
 
