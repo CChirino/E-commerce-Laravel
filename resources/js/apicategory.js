@@ -30,6 +30,7 @@ const apicategory = new Vue({
     },
     methods:{
             getCategory(){
+              if (this.slug) {
                 let url = '/api/category/'+this.slug
                 axios.get(url).then(response=>{
                   this.div_mensajeslug = response.data
@@ -42,6 +43,13 @@ const apicategory = new Vue({
                   }
                   this.div_aparecer = true
                 })
+
+              }else{
+                this.div_claseslug = 'badge badge-warning'
+                this.div_mensajeslug="Debes escribir una categoria"
+                this.deshabilitar_boton=1
+                this.div_aparecer = true
+              }
             }
     }
 });
