@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\categories;
 
-class AdminController extends Controller
+
+class AdminCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +16,9 @@ class AdminController extends Controller
      */
     public function index()
     {
-        //
+        $category = categories::orderBy('name')->paginate(3);
+        return view('admin.category.index', compact('category'));
+
     }
 
     /**
@@ -25,7 +28,7 @@ class AdminController extends Controller
      */
     public function create()
     {
-
+        return view('admin.category.create');
     }
 
     /**
@@ -36,6 +39,12 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
+        $cat = new categories();
+        $cat->name          = $request->nombre;
+        $cat->slug          = $request->slug;
+        $cat->description   = $request->descripcion;
+        $cat->save();
+        return $cat;
         
         // return categories::create($request->all());
     }
@@ -57,10 +66,13 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($slug)
     {
+        $cat = categories::where('slug',$slug)->firstOrFail();
 
+        $editar = 'Si';
 
+        return view('admin.category.edit',compact('cat','editar'));
     }
 
     /**
@@ -72,7 +84,12 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-
+        $cat = categories::findOrFail($id);
+        $cat->name          = $request->nombre;
+        $cat->slug          = $request->slug;
+        $cat->description   = $request->descripcion;
+        $cat->save();
+        return $cat;
     }
 
     /**
