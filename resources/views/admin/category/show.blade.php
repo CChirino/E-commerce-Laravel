@@ -1,11 +1,11 @@
 @extends('layouts.admin')
 
-@section('titulo','Editar Categoria')
+@section('titulo','Ver Categoria')
     
 @section('contenido')
 
 <div id="apicategory">
-  <form action="{{route('admin.category.update', $cat->id)}}" method="POST" >
+  <form>
     @csrf
 
     @method('put')
@@ -27,7 +27,7 @@
         <div class="card-body">
           <div class="form-group">
               <label for="nombre">Nombre</label>
-              <input v-model="nombre" 
+              <input readonly v-model="nombre" 
               @blur="getCategory" 
               @focus="div_aparecer= false"
               class="form-control" type="text" name="nombre" id="nombre">
@@ -37,13 +37,14 @@
           <div   v-if="div_aparecer" v-bind:class="div_claseslug"> @{{ div_mensajeslug }}</div>
               <br    v-if="div_aparecer">
               <label for="descripcion">Descripcion</label>
-              <textarea class="form-control" name="descripcion" id="descripcion" cols="30" rows="5">{{$cat->description}}</textarea>
+              <textarea readonly class="form-control" name="descripcion" id="descripcion" cols="30" rows="5">{{$cat->description}}</textarea>
           </div>
         </div>
         <!-- /.card-body -->
         <div class="card-footer">
-            <a href="{{route('cancelar','admin.category.index')}}" class="btn btn-danger" >Cancelar</a>
-            <input :disabled ="deshabilitar_boton==1" type="submit" value="Guardar" class="btn btn-success float-right" >
+          <a href="{{route('cancelar','admin.category.index')}}" class="btn btn-danger" >Cancelar</a>
+          <a href="{{route('admin.category.edit',$cat->slug)}}" class="btn btn-warning float-right" >Editar</a>
+
             <br> <br>       
             <!-- /.card-footer-->
           </div>

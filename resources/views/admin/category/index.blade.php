@@ -3,7 +3,9 @@
 @section('titulo','Administracion de Categorias')
     
 @section('contenido')
-<div class="row">
+<div class="row" id="confirmarelimnar" >
+  <span style="display:none;" id="urlbase">{{route('admin.category.index')}}</span>
+  @include('custom.modal_eliminar')
     <div class="col-12">
       <div class="card">
         <div class="card-header">
@@ -49,7 +51,12 @@
 
                 <td><a class="btn btn-info" href="{{ route('admin.category.show',$categories->slug) }}"> <i class="far fa-eye"></i> Ver</a></td>
                 <td><a class="btn btn-warning" href="{{ route('admin.category.edit',$categories->slug) }}"> <i class="far fa-edit"></i> Editar</a></td>
-                <td><a class="btn btn-danger" href="{{ route('admin.category.index') }}"> <i class="fas fa-trash"></i> Eliminar</a></td>
+                <td><a 
+                  class="btn btn-danger" 
+                  v-on:click.prevent="deseas_eliminar({{$categories->id}})" 
+                  href="{{ route('admin.category.index') }}" 
+                  data-toggle="modal"
+                  data-target="#modal_eliminar"> <i class="fas fa-trash"></i> Eliminar</a></td>
 
                 </tr>                    
                 @endforeach
