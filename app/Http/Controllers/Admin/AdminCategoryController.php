@@ -9,6 +9,10 @@ use App\categories;
 
 class AdminCategoryController extends Controller
 {
+    public function __construct() {
+
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -42,6 +46,11 @@ class AdminCategoryController extends Controller
     public function store(Request $request)
     {
         $cat = new categories();
+        $request->validate([
+            'nombre'        => 'required|max:100|unique:categories,name',
+            'slug'          => 'required|max:100|unique:categories,slug',
+            'descripcion'   => 'max:100',
+        ]);
         $cat->name          = $request->nombre;
         $cat->slug          = $request->slug;
         $cat->description   = $request->descripcion;
@@ -49,6 +58,7 @@ class AdminCategoryController extends Controller
         return redirect()->route('admin.category.index')->with('datos','Registro creado correctamente!');
         
         // return categories::create($request->all());
+
     }
 
     /**
@@ -91,6 +101,11 @@ class AdminCategoryController extends Controller
     public function update(Request $request, $id)
     {
         $cat = categories::findOrFail($id);
+        $request->validate([
+            'nombre'        => 'required|max:100|unique:categories,name',
+            'slug'          => 'required|max:100|unique:categories,slug',
+            'descripcion'   => 'max:100',
+        ]);
         $cat->name          = $request->nombre;
         $cat->slug          = $request->slug;
         $cat->description   = $request->descripcion;
