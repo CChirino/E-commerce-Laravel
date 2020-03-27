@@ -2,6 +2,11 @@
 
 @section('titulo','Ver Categoria')
     
+@section('breadcrumb')
+  <li class="breadcrumb-item"><a href="{{route('admin.category.index')}}">Categorias</a></li>
+  <li class="breadcrumb-item active">@yield('titulo')</li>
+@endsection
+    
 @section('contenido')
 
 <div id="apicategory">

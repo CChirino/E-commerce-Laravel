@@ -14,9 +14,11 @@ class AdminCategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $category = categories::orderBy('name')->paginate(3);
+    public function index(Request $request)
+    {   
+        $nombre = $request->get('name');
+        // dd($nombre);
+        $category = categories::where('name','like',"%$nombre%")->orderBy('name')->paginate(3);
         return view('admin.category.index', compact('category'));
 
     }
@@ -104,6 +106,8 @@ class AdminCategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $cat= categories::findOrFail($id);
+        $cat->delete();
+        return redirect()->route('admin.category.index')->with('datos','Registro eliminado correctamente!');
     }
 }

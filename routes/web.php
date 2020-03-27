@@ -44,7 +44,7 @@ Auth::routes();
 
 Route::get('/admin', function () {
     return view('layouts.admin');
-});
+})->name('admin');
 // Route::get('/create-category', function () {
 //     return view('admin.category.create');
 // });
